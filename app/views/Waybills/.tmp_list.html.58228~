@@ -1,0 +1,42 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle" align="center"">托运单列表</h2>
+
+    <div id="crudListSearch">
+    	#{form action:@list().remove('page'), method:'GET'}
+	    	开始日期:<input type="text" name="startDate" value="" />  结束日期:<input type="text" name="endDate" value="" /> <br/>
+	    	客户名称:<input type="text" name="customerName" value="" />  车号:<input type="text" name="cardNO" value="" /> 
+        	<BR/><input type="submit" value="&{'crud.search'}" />	
+        #{/form}
+    </div>
+
+    <div id="crudListTable">
+        #{crud.table fields:['id','createDate', 'customer', 'carNO','warehouseNO', 'ContainerNO', 'SealNO','ExtractPlace', 'BackPlace', 'containerType','trailerFee', 'provideDifferentFee', 'portFee','printFee', 'pressureCarFee', 'otherFee','totalFee','memo'] }
+	         #{crud.custom 'ExtractPlace'}
+			   ${object.ExtractPlace.name}
+			 #{/crud.custom}
+			 #{crud.custom 'BackPlace'}
+			   ${object.BackPlace.name}
+			 #{/crud.custom}
+			 #{crud.custom 'containerType'}
+			   ${object.containerType.name}
+			 #{/crud.custom}
+ 		#{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">新增托运单</a>
+    </p>
+       
+    <p id="crudListExport">
+        <a href="@{excelReport.genWayBills()}">导出为excel</a>
+    </p>  
+
+</div>

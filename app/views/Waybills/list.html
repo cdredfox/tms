@@ -1,0 +1,77 @@
+#{extends 'main.html' /}
+#{set title:messages.get('crud.list.title', type.name) /}
+<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/crud.css'}" />
+<script src="@{'/public/My97DatePicker/WdatePicker.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<script src="@{'/public/easyui/jquery-1.6.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+
+
+<div id="crudContent">
+<div id="crudList" class="${type.name}">
+
+    <h2 id="crudListTitle" align="center"">托运单列表</h2>
+
+
+
+    <div id="crudListSearch">
+    	#{form action:@list().remove('page'), method:'GET',id:'searchForm'}
+	    	开始日期:<input type="text" name="startDate" value="${startDate}" class="Wdate" />  结束日期:<input type="text" name="endDate" value="${endDate}" class="Wdate" /> <br/>
+	    	客户名称:<input type="text" name="customerName" value="${customerName}" />  车号:<input type="text" name="cardNO" value="${cardNO}" /> 
+        	<BR/><input type="submit" value="&{'crud.search'}" />	
+        #{/form}
+    </div>
+
+	
+
+    <div id="crudListTable">
+        #{crud.table fields:['id','createDate', 'customer', 'car','warehouseNO', 'ContainerNO', 'SealNO','ExtractPlace', 'BackPlace', 'containerType','wardrobeAddress','trailerFee', 'provideDifferentFee', 'portFee','printFee', 'pressureCarFee', 'otherFee','totalFee','realTotalFee','memo'] }
+	         #{crud.custom 'ExtractPlace'}
+			   ${object.ExtractPlace.name}
+			 #{/crud.custom}
+			 #{crud.custom 'BackPlace'}
+			   ${object.BackPlace.name}
+			 #{/crud.custom}
+			 #{crud.custom 'containerType'}
+			   ${object.containerType.name}
+			 #{/crud.custom}
+			 #{crud.custom 'customer'}
+			   ${object.customer}
+			 #{/crud.custom}
+ 		#{/crud.table}
+    </div>
+
+    <div id="crudListPagination">
+        #{crud.pagination /}
+    </div>
+
+    <p id="crudListAdd">
+        <a href="@{blank()}">新增托运单</a>
+    </p>
+       
+    <p id="crudListExport">
+        <a id="exportExcel" href="javascript:genExcel()">导出客户托运单</a>
+		<a id="exportExcel" href="javascript:genCarExcel()">导出司机托运单</a>
+    </p>  
+
+</div>
+</div>
+<script type="text/javascript">
+	$('.Wdate').click(function(){
+			WdatePicker();
+		});
+	function genExcel(){
+		var action=$("#searchForm").attr("action");
+		$("#searchForm").attr("action","@{excelReport.genWayBills()}");
+		$("#searchForm").submit();
+		$("#searchForm").attr("action",action);
+	}
+	function genCarExcel(){
+		var action=$("#searchForm").attr("action");
+		$("#searchForm").attr("action","@{excelReport.genCarWayBills()}");
+		$("#searchForm").submit();
+		$("#searchForm").attr("action",action);
+	}
+	
+	
+	
+
+</script>

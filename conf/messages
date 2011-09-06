@@ -1,0 +1,76 @@
+# You can specialize this file for each language.
+# For example, for French create a messages.fr file
+#
+
+
+createDate=日期
+customer=客户名称
+car=车牌号
+warehouseNO=定仓号
+ContainerNO=柜号
+SealNO=封号
+ExtractPlace=提柜地
+BackPlace=还柜地
+containerType=柜型
+trailerFee=拖车费
+provideDifferentFee=异提费
+portFee=港建费
+printFee=打单费
+pressureCarFee=压车费
+otherFee=其它
+totalFee=合计
+memo=备注
+realTrailerFee=实际拖车费
+realProvideDifferentFee=实际异提费
+realPressureCarFee=实际压车费
+new=新增
+edit=修改
+delete=删除
+realTotalFee=实际合计
+wardrobeAddress=装柜地址
+
+Waybills=托运单
+
+crud.title=深圳市众泰物流有限公司 货运管理系统
+crud.home=首页
+crud.blank=新增
+crud.index.title=请选择一个需要编辑的对象
+crud.index.objectType=Object type
+crud.index.action=
+crud.index.add=新增
+crud.add=新增 &{%s}
+crud.list.title=&{%s}
+crud.list.size=%d &{%s}
+crud.list.totalSize=%d total
+crud.pagination.previous=« 上一页
+crud.pagination.next=下一页 »
+crud.pagination.last=未页 »»
+crud.pagination.first=«« 首页
+crud.show.title=编辑 &{%s}
+crud.save=保存
+crud.saveAndContinue=保存并继续编辑
+crud.cancel=取消
+crud.hasErrors=出错了
+crud.blank.title=新增 &{%s}
+crud.saveAndAddAnother=保存并创建下一个
+crud.delete=删除 &{%s}
+crud.created= &{%s} 已经成功创建了
+crud.saved= &{%s} 已经成功保存
+crud.deleted= &{%s} 已经成功删除
+crud.delete.error=这个记录不能被删除
+crud.search=查找
+crud.none=--请选择--
+crud.selectValue=(请选择)
+
+crud.help.required=必填.
+crud.help.minlength=长度必须大于 %d.
+crud.help.maxlength=长度必须小于 %d.
+crud.help.email=请输入有效的email地址.
+crud.help.dateformat=&{%s} 格式不同.
+crud.help.numeric=Numeric.
+crud.help.min=Must be greater than %d.
+crud.help.future=In the future.
+crud.help.past=In the past.
+crud.help.after=After %s.
+crud.help.before=Before %s.
+crud.help.range=Between %d and %d

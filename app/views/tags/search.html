@@ -1,0 +1,12 @@
+#{form action:@list().remove('page'), method:'GET'}
+    #{if _fields}
+      %{ _fields.each() { }%
+       &{it}
+      	<input type="text" name="search" value="" /> 
+      %{ } }%
+        <input type="submit" value="&{'crud.search'}" />	
+    #{/if}
+    #{if _caller.params.search}
+        (<a href="@{list()}">&{'crud.list.totalSize', _caller.totalCount}</a>)
+    #{/if}
+#{/form}

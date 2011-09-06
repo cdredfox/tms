@@ -1,0 +1,80 @@
+#{extends 'CRUD/layout.html' /}
+#{set title:messages.get('crud.blank.title', type.modelName) /}
+<script src="@{'/public/easyui/jquery-1.6.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<script src="@{'/public/My97DatePicker/WdatePicker.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+<div id="crudBlank" class="${type.name}">
+
+    <h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+
+    <div class="objectForm">
+    #{form action:@create(), enctype:'multipart/form-data'}
+        #{crud.form}
+        
+        #{/crud.form}
+        <p class="crudButtons">
+            <input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+            <input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+            <input type="submit" name="_saveAndAddAnother" value="&{'crud.saveAndAddAnother', type.modelName}" />
+        </p>
+    #{/form}
+    </div>
+
+</div>
+
+<script type="text/javascript">
+		$('#object_createDate').addClass("Wdate");
+		$('#object_createDate').click(function(){
+			WdatePicker();
+		});
+        $('#object_trailerFee').change(function(){
+        	calc();
+        });
+        $('#object_realTrailerFee').change(function(){
+        	calcReal();
+        });
+		$('#object_provideDifferentFee').change(function(){
+			calc();    	
+		});
+		$('#object_realProvideDifferentFee').change(function(){
+			calcReal(); 	
+		});
+		$('#object_portFee').change(function(){
+			calc();
+        	calcReal();
+		});
+		$('#object_printFee').change(function(){
+			calc();
+        	calcReal();
+		});
+		$('#object_pressureCarFee').change(function(){
+			calc();
+		});
+		$('#object_realPressureCarFee').change(function(){
+			calcReal(); 	
+		});
+		$('#object_otherFee').change(function(){
+			calc();
+        	calcReal();
+		});
+		
+		$('#object_realTotalFee').attr("readonly","readonly");
+		$('#object_totalFee').attr("readonly","readonly");
+        function calc(){
+        	var trailerFee=Number($('#object_trailerFee').val());
+        	var provideDifferentFee=Number($('#object_provideDifferentFee').val());
+        	var portFee=Number($('#object_portFee').val());
+        	var printFee=Number($('#object_printFee').val());
+        	var pressureCarFee=Number($('#object_pressureCarFee').val());
+        	var otherFee=Number($('#object_otherFee').val());
+        	$('#object_totalFee').val(trailerFee+provideDifferentFee+portFee+printFee+pressureCarFee+otherFee);
+        }
+       function calcReal(){
+    	   var trailerFee=Number($('#object_realTrailerFee').val());
+       		var provideDifferentFee=Number($('#object_realProvideDifferentFee').val());
+       		var portFee=Number($('#object_portFee').val());
+       		var printFee=Number($('#object_printFee').val());
+       		var pressureCarFee=Number($('#object_realPressureCarFee').val());
+       		var otherFee=Number($('#object_otherFee').val());
+       		$('#object_realTotalFee').val(trailerFee+provideDifferentFee+portFee+printFee+pressureCarFee+otherFee);
+       }
+</script>

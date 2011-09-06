@@ -1,0 +1,271 @@
+#{extends 'main.html' /}
+<div id="tb" style="padding:0px;height:auto;">
+    <div>
+    	<form id="searchForm" action="/admin/waybills">
+	        <b>创建日期:</b>
+	        <input class="easyui-datebox" style="width:100px" id="startDate" name="startDate">到: <input id="endDate" name="endDate" class="easyui-datebox" style="width:100px">
+	        <br/>
+	        <b>客户名称:</b>
+	        <input style="width:200px" id="customerName" name="customerName"/>
+	        <br/>
+	        <b>车牌号码:</b>
+	        <input style="width:200px" id="cardNO" name="cardNO" />
+	        <br/>
+	        <a href="javascript:search();" class="easyui-linkbutton" iconCls="icon-search">点击查询</a>
+		 </form>
+    </div>
+    <br/>
+    <div style="margin-bottom:5px" align="right">
+        <a href="javascript:createRow();" class="easyui-linkbutton" iconCls="icon-add" plain="true" handler="">新增货运单</a>
+        <a href="javascript:deleteRow();" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除货运单</a>
+        <a href="javascript:genExcel();" class="easyui-linkbutton" iconCls="icon-add" plain="true" handler="">导出客户托运单</a>
+        <a href="javascript:genCarExcel();" class="easyui-linkbutton" iconCls="icon-remove" plain="true" handler="">导出司机托运单</a>
+    </div>
+</div>
+<table id="tt">
+</table>
+
+<div id="dlg" class="easyui-dialog" style="width:600px;height:400px;padding:10px 20px"  
+        closed="true" buttons="#dlg-buttons">  
+    <form id="fm" method="post">  
+        <div class="fitem"> 
+	            <label>托运日期:</label>  
+	           <input class="easyui-datebox" required="true">
+				<label>客户名称:</label>  
+	            <input name="lastname" class="easyui-validatebox" required="true"> 
+        </div>  
+        <div class="fitem">  
+            <label>车牌号码:</label>  
+            <input name="phone">  
+			<label>&nbsp;&nbsp;定仓号:</label>  
+            <input name="email" class="easyui-validatebox" validType="email"> 
+        </div>  
+        <div class="fitem">  
+ 			<label>&nbsp;&nbsp;&nbsp;&nbsp;柜号:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>&nbsp;&nbsp;&nbsp;&nbsp;封号:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div>  
+        <div class="fitem">  
+ 			<label>&nbsp;&nbsp;提柜地:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>&nbsp;&nbsp;还柜地:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div>
+        <div class="fitem">  
+ 			<label>&nbsp;&nbsp;&nbsp;&nbsp;柜型:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>装柜地址:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div>  
+		 <div class="fitem">  
+ 			<label>&nbsp;&nbsp;拖车费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>实际拖车费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div> 
+		 <div class="fitem">  
+ 			<label>&nbsp;&nbsp;异提费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>实际异提费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div> 
+		 <div class="fitem">  
+ 			<label>&nbsp;&nbsp;港建费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>&nbsp;&nbsp;打单费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div> 
+		 <div class="fitem">  
+ 			<label>&nbsp;&nbsp;压车费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>实际压车费:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div> 
+		 <div class="fitem">  
+ 			<label>&nbsp;&nbsp;&nbsp;&nbsp;其它:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>&nbsp;&nbsp;&nbsp;&nbsp;合计:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div> 
+		 <div class="fitem">  
+ 			<label>实际合计:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">
+			<label>&nbsp;&nbsp;&nbsp;&nbsp;备注:</label>  
+            <input name="email" class="easyui-validatebox" validType="email">    
+        </div> 		  		
+    </form>  
+</div>  
+<div id="dlg-buttons">  
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>  
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>  
+</div>  
+
+<script type="text/javascript">
+    
+    function deleteRow(){
+        var rec = $('#tt').datagrid('getSelected');
+        if (rec) {
+            $.messager.confirm('托运单删除', '确认要删除该条托运单吗?', function(r){
+                if (r) {
+                    $('#tt').datagrid('reload'); // reload the user data  
+                }
+            });
+        }
+        else {
+            $.messager.alert('托运单删除', '请先选中你要删除的托运单！');
+        }
+    }
+    
+    function createRow(){
+    
+        $('#dlg').dialog('open').dialog('setTitle', '新增托运单');
+        $('#fm').form('clear');
+        url = '/';
+        
+    }
+    
+    function modify(){
+    
+    }
+    
+    $('#tt').datagrid({
+        url: '/Waybills/list',
+        pagination: true,
+        frozenColumns: [[ //{field:'id',title:'编号',width:50},  
+        {
+            field: 'createDate',
+            title: '日期',
+            width: 100,
+            formatter: function(val, rec){
+                if (val != null) {
+                    var date = new Date(rec.createDate);
+                    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+                }
+            }
+        }, {
+            field: 'customer',
+            title: '客户名称',
+            width: 200,
+            formatter: function(val, rec){
+                if (val != null) {
+                    return rec.customer.name;
+                }
+            }
+        }]],
+        columns: [[{
+            field: 'car',
+            title: '车牌号',
+            width: 100,
+            formatter: function(val, rec){
+                if (val != null) {
+                    return rec.car.cardNO;
+                }
+            }
+        }, {
+            field: 'warehouseNO',
+            width: 100,
+            title: '定仓号'
+        }, {
+            field: 'ContainerNO',
+            width: 100,
+            title: '柜号'
+        }, {
+            field: 'SealNO',
+            width: 100,
+            title: '封号'
+        }, {
+            field: 'ExtractPlace',
+            width: 100,
+            title: '提柜地',
+            formatter: function(val, rec){
+                if (val != null) {
+                    return rec.ExtractPlace.name;
+                }
+            }
+        }, {
+            field: 'BackPlace',
+            width: 100,
+            title: '还柜地',
+            formatter: function(val, rec){
+                if (val != null) {
+                    return rec.BackPlace.name;
+                }
+            }
+        }, {
+            field: 'containerType',
+            width: 100,
+            title: '柜型',
+            formatter: function(val, rec){
+                if (val != null) {
+                    return rec.containerType.name;
+                }
+            }
+        }, {
+            field: 'wardrobeAddress',
+            width: 100,
+            title: '装柜地址'
+        }, {
+            field: 'trailerFee',
+            width: 100,
+            title: '拖车费'
+        }, {
+            field: 'provideDifferentFee',
+            width: 100,
+            title: '异提费'
+        }, {
+            field: 'portFee',
+            width: 100,
+            title: '港建费'
+        }, {
+            field: 'printFee',
+            width: 100,
+            title: '打单费'
+        }, {
+            field: 'pressureCarFee',
+            width: 100,
+            title: '压车费'
+        }, {
+            field: 'otherFee',
+            width: 100,
+            title: '其它'
+        }, {
+            field: 'totalFee',
+            width: 100,
+            title: '合计'
+        }, {
+            field: 'realTotalFee',
+            width: 100,
+            title: '实际合计'
+        }, {
+            field: 'memo',
+            width: 100,
+            title: '备注'
+        }]]
+    });
+	
+	
+	function genExcel(){
+		var action=$("#searchForm").attr("action");
+		$("#searchForm").attr("action","@{excelReport.genWayBills()}");
+		$("#searchForm").submit();
+		$("#searchForm").attr("action",action);
+	}
+	function genCarExcel(){
+		var action=$("#searchForm").attr("action");
+		$("#searchForm").attr("action","@{excelReport.genCarWayBills()}");
+		$("#searchForm").submit();
+		$("#searchForm").attr("action",action);
+	}
+	
+	function search(){
+		var queryParams=$('#tt').datagrid('options').queryParams;
+		queryParams.startDate=$('#startDate').val();
+		queryParams.endDate=$('#endDate').val();
+		queryParams.customerName=$('#customerName').val();
+		queryParams.cardNO=$('#cardNO').val();
+		$('#tt').datagrid('options').queryParams=queryParams;
+		$('#tt').datagrid('reload'); // reload the user data  
+	}
+	
+</script>
