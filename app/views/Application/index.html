@@ -25,89 +25,153 @@
 <table id="tt">
 </table>
 
-<div id="dlg" class="easyui-dialog" style="width:600px;height:400px;padding:10px 20px"  
+<div id="dlg" class="easyui-dialog" 
         closed="true" buttons="#dlg-buttons">  
     <form id="fm" method="post">  
+    	<input type="hidden" name="id">
         <div class="fitem"> 
 	            <label>托运日期:</label>  
-	           <input class="easyui-datebox" required="true">
+	           <input class="easyui-datebox" required="true" id="createDate" name="createDate">
 				<label>客户名称:</label>  
-	            <input name="lastname" class="easyui-validatebox" required="true"> 
+	            <input name="customer.id" id="customer" required="true"> 
+	            <input type='button' id='newCustomer' value='新客户'/>
         </div>  
         <div class="fitem">  
             <label>车牌号码:</label>  
-            <input name="phone">  
+            <input name="car.id" id="car">  
+            <input type='button' id='newCar' value='新车'/>
 			<label>&nbsp;&nbsp;定仓号:</label>  
-            <input name="email" class="easyui-validatebox" validType="email"> 
+            <input name="warehouseNO"> 
         </div>  
         <div class="fitem">  
  			<label>&nbsp;&nbsp;&nbsp;&nbsp;柜号:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="ContainerNO">
 			<label>&nbsp;&nbsp;&nbsp;&nbsp;封号:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="SealNO">    
         </div>  
         <div class="fitem">  
  			<label>&nbsp;&nbsp;提柜地:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="ExtractPlace.id" id="extractPlace" required="true">
 			<label>&nbsp;&nbsp;还柜地:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="BackPlace.id" id="backPlace" required="true">    
         </div>
         <div class="fitem">  
  			<label>&nbsp;&nbsp;&nbsp;&nbsp;柜型:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="containerType.id" id="containerType" required="true">
 			<label>装柜地址:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="wardrobeAddress">    
         </div>  
 		 <div class="fitem">  
  			<label>&nbsp;&nbsp;拖车费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="trailerFee" id="trailerFee" class="numberbox" ">
 			<label>实际拖车费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="realTrailerFee" id="realTrailerFee" class="numberbox">    
         </div> 
 		 <div class="fitem">  
  			<label>&nbsp;&nbsp;异提费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="provideDifferentFee" id="provideDifferentFee" class="numberbox">
 			<label>实际异提费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="realProvideDifferentFee" id="realProvideDifferentFee" class="numberbox">    
         </div> 
 		 <div class="fitem">  
- 			<label>&nbsp;&nbsp;港建费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+ 			<label>&nbsp;&nbsp;港建费:</label>
+            <input name="portFee" id="portFee" class="numberbox">
 			<label>&nbsp;&nbsp;打单费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="printFee" id="printFee" class="numberbox">    
         </div> 
 		 <div class="fitem">  
  			<label>&nbsp;&nbsp;压车费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="pressureCarFee" id="pressureCarFee" class="numberbox">
 			<label>实际压车费:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="realPressureCarFee" id="realPressureCarFee" class="numberbox">    
         </div> 
 		 <div class="fitem">  
  			<label>&nbsp;&nbsp;&nbsp;&nbsp;其它:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="otherFee" id="otherFee" class="numberbox">
 			<label>&nbsp;&nbsp;&nbsp;&nbsp;合计:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="totalFee" id="totalFee" class="numberbox">    
         </div> 
 		 <div class="fitem">  
  			<label>实际合计:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">
+            <input name="realTotalFee" id="realTotalFee" class="numberbox">
 			<label>&nbsp;&nbsp;&nbsp;&nbsp;备注:</label>  
-            <input name="email" class="easyui-validatebox" validType="email">    
+            <input name="memo">    
         </div> 		  		
     </form>  
 </div>  
 <div id="dlg-buttons">  
-    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">Save</a>  
-    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">Cancel</a>  
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveWaybill()">保存</a>  
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">关闭</a>  
 </div>  
 
 <script type="text/javascript">
-    
+    //页面下拉框初始化
+	$('#customer').combobox({  
+	    url:'/customers/list',  
+	    valueField:'id',  
+	    textField:'name'  
+	});
+	
+	$('#car').combobox({  
+	    url:'/cars/list',  
+	    valueField:'id',  
+	    textField:'cardNO'  
+	});
+	
+	$('#containerType').combobox({  
+	    url:'/containerTypes/list',  
+	    valueField:'id',  
+	    textField:'name'  
+	});
+	
+	$('#backPlace').combobox({  
+	    url:'/places/list',  
+	    valueField:'id',  
+	    textField:'name'  
+	});
+	
+	$('#extractPlace').combobox({  
+	    url:'/places/list',  
+	    valueField:'id',  
+	    textField:'name'  
+	});
+	
+	$('.numberbox').numberbox({  
+	    min:0,  
+	    precision:2  
+	});  
+	
+	$('#dlg').dialog({
+		title:'新增托运单',
+		width:600,
+		height:400,
+		onClose:function(){
+			$('#tt').datagrid('reload');
+		}
+	});
+	
+	fm=$('#fm').form({  
+	    url:"/waybills/create",  
+	    onSubmit:function(){
+	    	return $('#fm').form("validate");
+	    },
+	    success:function(data){  
+	    	$.messager.alert('托运单新增', '新增托运单成功！');
+	    	$('#fm').form("clear");
+	    }  
+	});  
+	
+	
+    function saveWaybill(){
+    	$('#fm').submit();
+    }
+	
     function deleteRow(){
         var rec = $('#tt').datagrid('getSelected');
         if (rec) {
             $.messager.confirm('托运单删除', '确认要删除该条托运单吗?', function(r){
                 if (r) {
+                	//TODO
                     $('#tt').datagrid('reload'); // reload the user data  
                 }
             });
@@ -119,20 +183,29 @@
     
     function createRow(){
     
-        $('#dlg').dialog('open').dialog('setTitle', '新增托运单');
+        $('#dlg').dialog('open');
         $('#fm').form('clear');
         url = '/';
         
     }
-    
-    function modify(){
-    
-    }
+   
     
     $('#tt').datagrid({
         url: '/Waybills/list',
         pagination: true,
-        frozenColumns: [[ //{field:'id',title:'编号',width:50},  
+        onDblClickRow:function(rowIndex,rowData){
+        	$('#dlg').dialog('open');
+        	$('#fm').form('load',rowData);
+        	//下拉框不能转换,手工转换
+        	$('#customer').combobox("select",rowData['customer'].id);
+        	$('#car').combobox("select",rowData['car'].id);
+        	$('#extractPlace').combobox("select",rowData['ExtractPlace'].id);
+        	$('#backPlace').combobox("select",rowData['BackPlace'].id);
+        	$('#containerType').combobox("select",rowData['containerType'].id);
+        	alert(fm.url);
+        },
+        nowrap:false,
+        frozenColumns: [[ //{field:'id',title:'编号',width:50},                           
         {
             field: 'createDate',
             title: '日期',
@@ -268,4 +341,98 @@
 		$('#tt').datagrid('reload'); // reload the user data  
 	}
 	
+	   
+	   $('#newCustomer').click(function(){
+	   	   
+		   $.messager.prompt('增加新客户','请输入新客户名称：',function(r){  
+			    if (r){  
+					$.messager.progress({title:'请稍候',msg:'请稍候,正在保存中......'});
+			        var listAction = #{jsAction @AjaxProcess.saveCustomer(':name',':t') /}
+					$.get(listAction({name:encodeURIComponent(r),t:new Date().getTime()}),function(data){
+						$.messager.progress('close');
+						if(data=="0"){
+							$.messager.alert('增加新客户',"您输入的客户已存在，请从下拉框中选择!"); 
+							return;
+						}
+						
+						$('#customer').combobox("reload");
+						$('#customer').combobox("select",data);
+						$.messager.alert('增加新客户','新的客户名称已经成功新增，请继续录入其它资料！'); 
+					});
+			    }  
+			});  
+
+	  } );
+	   $('#newCar').click(function(){
+	   	    
+			 $.messager.prompt('增加新货车','请输入新货车的车牌号：',function(r){  
+			    if (r){
+					$.messager.progress({title:'请稍候',msg:'请稍候,正在保存中......'});  
+			        var listAction = #{jsAction @AjaxProcess.saveCar(':name',':t') /}
+					$.get(listAction({name:encodeURIComponent(r),t:new Date().getTime()}),function(data){
+						$.messager.progress('close');
+						if(data=="0"){
+							$.messager.alert('增加新货车',"您输入的车牌号已存在，请从下拉框中选择!"); 
+							return;
+						}
+						$('#car').combobox("reload");
+						$('#car').combobox("select",data);
+						$.messager.alert('增加新货车','新的货车已经成功新增，请继续录入其它资料！'); 
+					});
+			    }  
+			});  
+
+	   });
+	
+	   //自动计算
+	    $('#trailerFee').change(function(){
+        	calc();
+        });
+        $('#realTrailerFee').change(function(){
+        	calcReal();
+        });
+		$('#provideDifferentFee').change(function(){
+			calc();    	
+		});
+		$('#realProvideDifferentFee').change(function(){
+			calcReal(); 	
+		});
+		$('#portFee').change(function(){
+			calc();
+		});
+		$('#printFee').change(function(){
+			calc();
+		});
+		$('#pressureCarFee').change(function(){
+			calc();
+		});
+		$('#realPressureCarFee').change(function(){
+			calcReal(); 	
+		});
+		$('#otherFee').change(function(){
+			calc();
+        	calcReal();
+		});
+		
+		$('#realTotalFee').attr("readonly","readonly");
+		$('#totalFee').attr("readonly","readonly");
+        function calc(){
+        	var trailerFee=Number($('#trailerFee').val());
+        	var provideDifferentFee=Number($('#provideDifferentFee').val());
+        	var portFee=Number($('#portFee').val());
+        	var printFee=Number($('#printFee').val());
+        	var pressureCarFee=Number($('#pressureCarFee').val());
+        	var otherFee=Number($('#otherFee').val());
+        	$('#totalFee').val(trailerFee+provideDifferentFee+portFee+printFee+pressureCarFee+otherFee);
+        }
+       function calcReal(){
+    	   var trailerFee=Number($('#realTrailerFee').val());
+       		var provideDifferentFee=Number($('#realProvideDifferentFee').val());
+       		var portFee=Number($('#portFee').val());
+       		var printFee=Number($('#printFee').val());
+       		var pressureCarFee=Number($('#realPressureCarFee').val());
+       		var otherFee=Number($('#otherFee').val());
+       		$('#realTotalFee').val(trailerFee+pressureCarFee+provideDifferentFee);
+       }
+	   
 </script>

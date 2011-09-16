@@ -3,7 +3,7 @@
 # ~~~~
 
 *       /                                       module:secure
-*       /                                       Waybills.index
+*       /                                       Application.index
 *       /admin           module:crud
 # Home page
 
