@@ -2,7 +2,9 @@ package controllers;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +15,8 @@ import com.ning.http.util.DateUtil;
 import models.Waybill;
 
 import controllers.CRUD.ObjectType;
+import play.Logger;
+import play.Play;
 import play.data.binding.Binder;
 import play.db.Model;
 import play.exceptions.TemplateNotFoundException;
@@ -23,33 +27,35 @@ import play.mvc.With;
 public class Waybills extends Controller {
 
 	public static void index() {
-		Calendar calendar = Calendar.getInstance(TimeZone
-				.getTimeZone("GMT+8:00"));
-		calendar.set(Calendar.DAY_OF_MONTH, 1);
-		String startDate = DateUtil
-				.formatDate(calendar.getTime(), "yyyy-MM-dd");
-		calendar.add(Calendar.MONTH, 1);
-		calendar.add(Calendar.DAY_OF_YEAR, -1);
-		String endDate = DateUtil.formatDate(calendar.getTime(), "yyyy-MM-dd");
-		list(0, startDate, endDate, null, null, "createDate", "DESC");
+		renderTemplate("Application/index.html");
 	}
 
+	
 	public static void list(int page, String startDate, String endDate,
-			String customerName, String cardNO, String orderBy, String order) {
+			String customerName, String cardNO, String orderBy, String order,
+			String rows) {
+		
+		Map result = doQuery(page, startDate, endDate, customerName, cardNO,
+				orderBy, order, rows);
+		renderJSON(result);
+	}
 
+	private static Map doQuery(int page, String startDate, String endDate,
+			String customerName, String cardNO, String orderBy, String order,
+			String rows) {
 		if (StringUtils.isEmpty(orderBy)) {
 			orderBy = "createDate";
 			order = "DESC";
 		}
 
-		ObjectType type=null;
+		ObjectType type = null;
 		try {
 			type = ObjectType.forClass(Waybill.class.getName());
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-	
+
 		notFoundIfNull(type);
 		if (page < 1) {
 			page = 1;
@@ -75,6 +81,7 @@ public class Waybills extends Controller {
 			}
 			where.append("  customer.name='").append(customerName).append("'");
 		}
+
 		if (!StringUtils.isEmpty(cardNO)) {
 			if (where == null) {
 				where = new StringBuffer();
@@ -83,33 +90,56 @@ public class Waybills extends Controller {
 			}
 			where.append(" car.cardNO ='").append(cardNO).append("'");
 		}
+		Play.configuration.setProperty("crud.pageSize", rows);
 		List<Model> objects = type.findPage(page, null, null, orderBy, order,
 				where == null ? null : where.toString());
 		Long count = type.count(null, null,
 				where == null ? null : where.toString());
-		Long totalCount = type.count(null, null, null);
 		try {
-			renderJSON(objects);
-			// render(type, objects, count, totalCount, page, orderBy,
-			// order,startDate,endDate,customerName,cardNO);
+			Map map = new HashMap();
+			map.put("total", count);
+			map.put("rows", objects);
+			return map;
 		} catch (Exception e) {
-			render("CRUD/list.html", type, objects, count, totalCount, page,
-					orderBy, order, startDate, endDate, customerName, cardNO);
+			Logger.error("query is error", e);
+			return null;
 		}
 	}
 
 	public static String create() {
-		Waybill wayBill = new Waybill();
+		Waybill wayBill;
+		String msg = "";
+		if (StringUtils.isEmpty(params.get("id"))) {
+			wayBill = new Waybill();
+			msg = "货运单信息录入成功!";
+		} else {
+			wayBill = Waybill.findById(Long.parseLong(params.get("id")));
+			msg = "货运单信息修改成功!";
+		}
+
 		Binder.bind(wayBill, "", params.all());
+		if(wayBill.car!=null && null==wayBill.car.id){
+			//json过来的字符串,如果对象为null,还是会弄一个空对象出来,在这里重置一下,设为null对象
+			wayBill.car=null;
+		}
 		wayBill.save();
-		return "货运单信息新增成功";
-	}
-	
-	public static String update(){
-		Waybill wayBill = new Waybill();
-		Binder.bind(wayBill, "", params.all());
-		wayBill.save();
-		return "货运单信息修改成功";
+		return msg;
 	}
 
+	public static void find(long id) {
+		Waybill wayBill = Waybill.findById(id);
+		renderJSON(wayBill);
+	}
+
+	public static boolean delete(long id) {
+		try {
+			Waybill wayBill = Waybill.findById(id);
+			wayBill.delete();
+			return true;
+		} catch (Exception e) {
+			Logger.error("delete waybill error!", e);
+			return false;
+		}
+
+	}
 }

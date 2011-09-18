@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>#{get 'title' /}</title>
+        <title>集装箱管理系统</title>
         <meta charset="${_response_encoding}">
+		<link rel="stylesheet" media="screen" href="@{'/public/stylesheets/default.css'}">
         <link rel="stylesheet" media="screen" href="@{'/public/easyui/themes/icon.css'}">
         <link rel="stylesheet" media="screen" href="@{'/public/easyui/themes/default/easyui.css'}">
         #{get 'moreStyles' /}
@@ -13,23 +14,40 @@
         </script>
     	<script src="@{'/public/easyui/locale/easyui-lang-zh_CN.js'}" type="text/javascript" charset="${_response_encoding}">
         </script>
+          
+        <style type="text/css">
+        
+        #crudHeader {
+			background: #111111;
+			padding: 10px 20px;
+		}
+
+		#crudHeader h1 {
+			margin: 0;
+			font-weight: normal;
+		}
+		
+		#crudHeader h1 a {
+			color: gold;
+			text-decoration: none;
+		}
+        
+        </style>
 	</head>
     <body class="easyui-layout">
-        <div region="north" title="North Title" split="true" style="height:100px;">
+        <div region="north"  split="true" style="height:60px;">
+        	<div id="crudHeader"><h1><a href="/">深圳市众泰物流有限公司 货运管理系统</a></h1></div>
         </div>
         <div region="west" split="true" title="货运管理系统" style="width:120px;">
             <ul>
-            	<li><a href="/">托运单管理</a></li>
-            	<li><a href="#">报表统计</a></li>
+            	<li><h4><a href="/">托运单管理</a></h4></li>
+            	<li><h4><a href="javascript:alert('功能开发中,请稍候')">报表统计</a></h4></li>
+            	<li><h4><a href="/logout">退出系统</a></h4></li>
             </ul>
         </div>
-        <div region="center" title="center title" style="padding:5px;background:#eee;">
+        <div region="center" title="工作台" style="padding:5px;background:#eee;">
             #{doLayout /}
         </div>
     </body>
-    <script type="text/javascript">
-        $('#tt').tree({
-            url: '/Application/menus'
-        });
-    </script>
+    
 </html>

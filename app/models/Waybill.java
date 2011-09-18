@@ -49,5 +49,9 @@ public class Waybill extends Model {
 	public BigDecimal totalFee;
 	public BigDecimal realTotalFee;
 	public String memo;
+	/**
+	 * 客户工作单号
+	 */
+	public String customerWorkNO;
 	
 }
