@@ -296,6 +296,12 @@
         
     }
    
+   
+    //设置datagird分页控件  
+    //var p = $('#tt').datagrid('getPager');  
+    //$(p).pagination({  
+    //    displayMsg: '当前共有 {total} 条记录',  
+    //});  
     
     $('#tt').datagrid({
         url: '/Waybills/list',
@@ -317,7 +323,12 @@
         	 
         },
         nowrap:false,
-        frozenColumns: [[ //{field:'id',title:'编号',width:50},                           
+        frozenColumns: [[ 
+		{
+			field:'id',
+			title:'编号',
+			width:50
+		},                           
         {
             field: 'createDate',
             title: '日期',
