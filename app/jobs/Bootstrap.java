@@ -1,6 +1,9 @@
 package jobs;
 
+import java.util.Date;
+
 import models.ContainerType;
+import models.Message;
 import models.Place;
 import models.User;
 import play.jobs.Job;

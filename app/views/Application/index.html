@@ -180,8 +180,8 @@
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">关闭</a>  
 </div>  
 
-<script type="text/javascript">
-
+<script type="text/javascript"> 
+	
 	//页面加载时初始化日期
 	var date = new Date();
 	var endDate=new Date(date.getFullYear(), date.getMonth() + 1, 0);
@@ -237,7 +237,7 @@
 	$('#dlg').dialog({
 		title:'新增托运单',
 		width:850,
-		height:650,
+		height:630,
 		onClose:function(){
 			$('#tt').datagrid('reload');
 		}
@@ -297,11 +297,7 @@
     }
    
    
-    //设置datagird分页控件  
-    //var p = $('#tt').datagrid('getPager');  
-    //$(p).pagination({  
-    //    displayMsg: '当前共有 {total} 条记录',  
-    //});  
+  
     
     $('#tt').datagrid({
         url: '/Waybills/list',
@@ -444,6 +440,11 @@
         }]]
     });
 	
+	//设置datagird分页控件  
+    var pager = $('#tt').datagrid('getPager');  
+    pager.pagination({  
+        displayMsg:'当前共有 {total} 条记录'
+        });  
 	
 	function genExcel(){
 		var action=$("#searchForm").attr("action");
