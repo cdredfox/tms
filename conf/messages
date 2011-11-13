@@ -74,3 +74,12 @@ crud.help.past=In the past.
 crud.help.after=After %s.
 crud.help.before=Before %s.
 crud.help.range=Between %d and %d
+
+#secure
+secure.title=登  录
+secure.username=用户名:
+secure.password=密  码:
+secure.remember=Remember me
+secure.signin=登  录
+secure.error=哎呀,您输入的用户或者密码出错了!.
+secure.logout=您已经成功退出了系统.
