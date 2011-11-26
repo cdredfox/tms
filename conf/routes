@@ -5,6 +5,7 @@
 *       /                                       module:secure
 *       /                                       Waybills.index
 *       /admin           module:crud
+*       /public/query
 # Home page
 
 # Ignore favicon requests

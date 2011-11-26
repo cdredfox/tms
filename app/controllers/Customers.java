@@ -17,5 +17,5 @@ public class Customers extends Controller {
 		List<Customer> results = Customer.findAll();
 		renderJSON(results);
 	}
-
+	
 }

@@ -140,6 +140,13 @@ public class Waybills extends Controller {
 			Logger.error("delete waybill error!", e);
 			return false;
 		}
-
+	}
+	
+	/**
+	 * 给外部客户公网查询用
+	 * @param customerUserName
+	 */
+	public static void publicQuery(String customerUserName){
+		
 	}
 }

@@ -27,154 +27,103 @@
 
 <div id="dlg" class="easyui-dialog" 
         closed="true" buttons="#dlg-buttons">  
-     
-	    <form id="fm" method="post" >  
-	    	<input type="hidden" name="id" id="id">
-	    	 <div class="clearfix" style="margin-top: 20px">
-		         <div class="row">
-		         		 	<div class="span6">
-					            <label for="createDate">托运日期:</label>  
-					            <input id="createDate" name="createDate" class="span2"/>
-						 	</div>
-						 	<div class="span8"">
-							 	<label for="customer">客户名称:</label>  
-							    <input name="customer.id" id="customer" required="true" /> 
-							    <input type='button' id='newCustomer' value='新客户' class="btn success"/>
-						  	</div>
-			         
-		        </div>
-		     </div>
-		     <div class="clearfix">
-	        <div class="row">
-	        	<div class="span6">  
-					<label for="warehouseNO">定仓号:</label>  
-		            <input name="warehouseNO" id="warehouseNO" class="span3"/> 
-		         </div>   
-	        	<div class="span8">  
-		            <label for="car">车牌号码:</label>  
-		            <input name="car.id" id="car" class="span3"/>  
-		           <input type='button' id='newCar' value='新车' class="btn success"/>
-		         </div>
-	        </div> 
-		     </div>
-		     <div class="clearfix"> 
-	        <div class="row">
-	        	<div class="span6"> 
-		 			<label for="ContainerNO">柜号:</label>  
-		            <input name="ContainerNO" id="ContainerNO" class="span3"/>
-		        </div>
-		        <div class="span6"> 
-					<label for="SealNO">封号:</label>  
-		            <input name="SealNO" id="SealNO" class="span3"/>
-		        </div>    
-	        </div>  
-	         </div>
-		     <div class="clearfix">
-	        <div class="row">
-	        	<div class="span6">   
-		 			<label for="extractPlace">提柜地:</label>  
-		            <input name="ExtractPlace.id" id="extractPlace" required="true" class="span3"/>
-		        </div> 	
-		        <div class="span6"> 
-					<label for="backPlace">还柜地:</label>  
-		            <input name="BackPlace.id" id="backPlace" required="true" class="span3"/>    
-	        	</div> 	
-	        </div>
-		     </div>
-		     <div class="clearfix">	       
-	        <div class="row">
-	        	<div class="span6">   
-		 			<label for="containerType">柜型:</label>  
-		            <input name="containerType.id" id="containerType" required="true" class="span3"/>
-		        </div> 	
-		        <div class="span6"> 
-					<label for="wardrobeAddress">装柜地址:</label>  
-		            <input name="wardrobeAddress" id="wardrobeAddress" class="span3"/>    
-	        	</div> 	
-	        </div> 
-		     </div>
-		     <div class="clearfix">	         
-			<div class="row">
-				<div class="span6"> 
-		 			<label for="trailerFee">拖车费:</label>  
-		            <input name="trailerFee" id="trailerFee" class="numberbox span3" >
-		         </div> 	
-		         <div class="span6"> 
-					<label for="realTrailerFee">实际拖车费:</label>  
-		            <input name="realTrailerFee" id="realTrailerFee" class="numberbox span3">    
-	        	 </div> 	
-	        </div> 
-		     </div>
-		     <div class="clearfix">	        
-			<div class="row">  
-				<div class="span6"> 
-		 			<label for="provideDifferentFee">异提费:</label>  
-		            <input name="provideDifferentFee" id="provideDifferentFee" class="numberbox span3">
-		        </div> 	
-		        <div class="span6"> 
-					<label for="realProvideDifferentFee">实际异提费:</label>  
-		            <input name="realProvideDifferentFee" id="realProvideDifferentFee" class="numberbox span3">    
-	        	</div> 	
-	        </div> 
-		     </div>
-		     <div class="clearfix">	        
-			<div class="row"> 
-				<div class="span6"> 
-		 			<label for="portFee">港建费:</label>
-		            <input name="portFee" id="portFee" class="numberbox span3">
-		        </div> 	
-		        <div class="span6"> 
-					<label for="printFee">打单费:</label>  
-		            <input name="printFee" id="printFee" class="numberbox span3">    
-	        	</div> 	
-	        </div> 
-		     </div>
-		     <div class="clearfix">	        
-			<div class="row">
-				<div class="span6">  
-		 			<label for="pressureCarFee">压车费:</label>  
-		            <input name="pressureCarFee" id="pressureCarFee" class="numberbox span3">
-		        </div> 	
-		        <div class="span6"> 
-					<label for="realPressureCarFee">实际压车费:</label>  
-		            <input name="realPressureCarFee" id="realPressureCarFee" class="numberbox span3">    
-	        	</div> 	
-	        </div> 
-		     </div>
-		     <div class="clearfix">	        
-			<div class="row">
-				<div class="span6">   
-		 			<label for="otherFee">其它:</label>  
-		            <input name="otherFee" id="otherFee" class="numberbox span3">
-		        </div> 	
-		        <div class="span6"> 
-					<label for="totalFee">合计:</label>  
-		            <input name="totalFee" id="totalFee" class="numberbox span3">
-		        </div> 	    
-	        </div> 
-		     </div>
-		     <div class="clearfix">	        
-			<div class="row">
-				<div class="span6"> 
-		 			<label for="realTotalFee">实际合计:</label>  
-		            <input name="realTotalFee" id="realTotalFee" class="numberbox span3">
-		        </div> 	
-		        <div class="span6">
-	        		<label for="customerWorkNO">客户工作单号:</label>  
-	        		<input name="customerWorkNO" id="customerWorkNO" class="span3"/>
-	        	</div>	   
-	        </div> 
-		     </div>
-		     <div class="clearfix">	        
-	        <div class="row">
-	        	<div class="span12"> 
-					<label for="memo">备注:</label>  
-		            <input name="memo" id="memo" class="span9"> 
-		        </div> 
-	        	
-	        </div>		  		
-	    </form>  
-</div>  
+     <div style="padding-top: 14px">
+	    <form id="fm" method="post" >
+			<table border="0">
+				<tr>
+					<td>
+		    			<input type="hidden" name="id" id="id">
+					    托运日期:</td><td>  
+						<input id="createDate" name="createDate"/>
+					</td>
+					<td>
+						客户名称:</td><td>  
+						<input name="customer.id" id="customer" required="true" /> 
+						<input type='button' id='newCustomer' value='新客户' class="btn success"/>
+					</td>
+					<td>
+						定仓号:</td><td>  
+			            <input name="warehouseNO" id="warehouseNO"/>   
+		            </td>
+		            <tr>
+						<td>车牌号码:</td><td>  
+			            <input name="car.id" id="car" class="span3"/>  
+			           <input type='button' id='newCar' value='新车' class="btn success"/>
+						</td>
+						<td>柜号:</td><td>  
+			            <input name="ContainerNO" id="ContainerNO" class="span3"/>
+						</td>
+						<td>封号:</td><td>  
+			            <input name="SealNO" id="SealNO" class="span3"/> 
+						</td>
+					</tr>
+					<tr>
+						<td>提柜地:</td><td>  
+			            <input name="ExtractPlace.id" id="extractPlace" required="true" class="span3"/>
+						</td>
+						<td>还柜地:</td><td>  
+			            <input name="BackPlace.id" id="backPlace" required="true" class="span3"/>   
+						</td>
+						<td>柜型:</td><td>  
+			            <input name="containerType.id" id="containerType" required="true" class="span3"/>
+						</td>
+					</tr>
+					<tr>
+						<td>装柜地址:</td><td>  
+			            <input name="wardrobeAddress" id="wardrobeAddress" class="span3"/>
+						</td>
+						<td>拖车费:</td><td>  
+			            <input name="trailerFee" id="trailerFee" class="numberbox span3" >
+						</td>
+						<td>实际拖车费:</td><td>  
+			            <input name="realTrailerFee" id="realTrailerFee" class="numberbox span3"> 
+						</td>
+					</tr>
+					<tr>
+						<td>异提费:</td><td>  
+			            <input name="provideDifferentFee" id="provideDifferentFee" class="numberbox span3">
+						</td>
+						<td>实际异提费:</td><td>  
+			            <input name="realProvideDifferentFee" id="realProvideDifferentFee" class="numberbox span3"> 
+						</td>
+						<td>港建费:</td><td>
+			            <input name="portFee" id="portFee" class="numberbox span3">
+						</td>
+					</tr>
+					<tr>
+						<td>打单费:</td><td>  
+			            <input name="printFee" id="printFee" class="numberbox span3">
+						</td>
+						<td>压车费:</td><td>  
+			            <input name="pressureCarFee" id="pressureCarFee" class="numberbox span3">
+						</td>
+						<td>实际压车费:</td><td>  
+			            <input name="realPressureCarFee" id="realPressureCarFee" class="numberbox span3">  
+						</td>
+					</tr>
+					<tr>
+						<td>其它:</td><td>  
+			            <input name="otherFee" id="otherFee" class="numberbox span3">
+						</td>
+						<td>合计:</td><td>  
+			            <input name="totalFee" id="totalFee" class="numberbox span3">
+						</td>
+						<td>实际合计:</td><td>  
+			            <input name="realTotalFee" id="realTotalFee" class="numberbox span3">
+			            </td>
+			        </tr>
+			        <tr>
+						<td>客户工作单号:</td><td>  
+		        		<input name="customerWorkNO" id="customerWorkNO" class="span3"/>
+		        		</td>
+						<td>备注:</td><td>  
+			            <input name="memo" id="memo" class="span9"> 
+						</td>
+						<td>
+					<tr/>	  		
+	    	 </table>
+	    </form> 
+	   </div>  
 <div id="dlg-buttons">  
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveWaybill()">保存</a>  
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">关闭</a>  
@@ -182,11 +131,14 @@
 
 <script type="text/javascript"> 
 	
+	$(":text").addClass("unline_text");
 	//页面加载时初始化日期
 	var date = new Date();
 	var endDate=new Date(date.getFullYear(), date.getMonth() + 1, 0);
 	$('#startDate').datebox('setValue',date.getFullYear() + '-' + (date.getMonth() + 1)+"-01");
 	$('#endDate').datebox('setValue',endDate.getFullYear() + '-' + (endDate.getMonth() + 1)+"-"+endDate.getDate());
+
+    
 
     //页面下拉框初始化
 	$('#customer').combobox({  
@@ -237,7 +189,7 @@
 	$('#dlg').dialog({
 		title:'新增托运单',
 		width:850,
-		height:630,
+		height:350,
 		onClose:function(){
 			$('#tt').datagrid('reload');
 		}

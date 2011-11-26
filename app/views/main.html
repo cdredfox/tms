@@ -38,45 +38,47 @@
         <div region="north"  split="true" style="height:60px;">
         	<div id="crudHeader"><h1><a href="/">深圳市众泰物流有限公司 货运管理系统</a></h1></div>
         </div>
-        <div region="west" split="true" title="货运管理系统" style="width:120px;">
-            <ul>
-            	<li><h4><a href="/">托运单管理</a></h4></li>
-            	<li><h4><a href="javascript:alert('功能开发中,请稍候')">报表统计</a></h4></li>
-            	<li><h4><a href="javascript:$('#dlg_passwd').dialog('open');">密码修改</a></h4></li>
-            	<li><h4><a href="/logout">退出系统</a></h4></li>
+        <div region="west" split="true" title="货运管理系统" style="width:150px;">
+            <ul id="menus">
+            	<li>
+            		<span>系统管理</span>
+	            	<ul>
+		            	<li><span><a href="/">托运单管理</a></span></li>
+		            	<!-- 
+		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">报表统计</a></span></li>
+		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">应收费用查询</a></span></li>
+		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">应付费用查询</a></span></li>
+		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">应收费用核销</a></span></li>
+		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">应付费用核销</a></span></li>
+		            	 -->
+		            	<li><span><a href="/users/index">用户管理</a></span></li>
+		            	<li><span><a href="javascript:$('#dlg_passwd').dialog('open');">密码修改</a></span></li>
+		            	<li><span><a href="/logout">退出系统</a></span></li>
+	            	</ul>
+            	</li>
             </ul>
         </div>
-        <div region="center" title="工作台" style="padding:5px;background:#eee;">
+        <div region="center" title="工作台" style="padding:5px;">
             #{doLayout /}
         </div>
         
         
         <div id="dlg_passwd" class="easyui-dialog" closed="true" buttons="#dlg-passwd-buttons" title="密码修改"'>  
         	<form id="passwd_fm" method="post" >
-        		<div class="clearfix" style="margin-top: 20px">
-	        		<div class="row">
-	        			<div class="span6">
-	        				<label for="old_passwd">当前密码:</label>
-	        				<input type="password" id="old_passwd" name="old_passwd" class="span3 easyui-validatebox" required="true" />
-	        			</div>
-	        		</div>
-	        	</div>
-	        	<div class="clearfix">
-	        		<div class="row">
-	        			<div class="span6">
-	        				<label for="passwd">新密码:</label>
-	        				<input type="password" id="passwd" name="passwd" class="span3 easyui-validatebox" required="true" />
-	        			</div>
-	        		</div>
-	        	</div>
-	        	<div class="clearfix">
-	        		<div class="row">
-	        			<div class="span6">
-	        				<label for="confirm_passwd">确认新密码:</label>
-	        				<input type="password" id="confirm_passwd" name="confirm_passwd" required="true" validType="confirmPwd['passwd']" class="easyui-validatebox span3"/>
-	        			</div>
-	        		</div>
-	        	</div>
+ 				<table>
+ 					<tr>
+ 						<td>当前密码:</td>
+	        			<td><input type="password" id="old_passwd" name="old_passwd" class="unline_text easyui-validatebox" required="true" /></td>
+	        		</tr>
+	        		<tr>
+	        			<td>新密码:</td>
+	        			<td><input type="password" id="passwd" name="passwd" class="unline_text easyui-validatebox" required="true" /></td>
+	        		</tr>
+	        		<tr>
+	        			<td>确认新密码:</td>
+	        			<td><input type="password" id="confirm_passwd" name="confirm_passwd" required="true" validType="confirmPwd['passwd']" class="unline_text easyui-validatebox"/></td>
+        			</tr>
+        		</table>
         	</form>
         </div>  
         <!--    confirmpwd[passwd] -->
@@ -87,6 +89,10 @@
     </body>
     
 <script type="text/javascript"> 
+	
+	$("#menus").tree({
+		
+	});
 	
 	$.extend($.fn.validatebox.defaults.rules, {  
 	    confirmPwd: {  
