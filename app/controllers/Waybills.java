@@ -1,5 +1,6 @@
 package controllers;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import org.apache.commons.lang.time.DateUtils;
 
 import com.ning.http.util.DateUtil;
 
+import models.Repayment;
 import models.Waybill;
 
 import controllers.CRUD.ObjectType;
@@ -122,7 +124,23 @@ public class Waybills extends Controller {
 			//json过来的字符串,如果对象为null,还是会弄一个空对象出来,在这里重置一下,设为null对象
 			wayBill.car=null;
 		}
-		wayBill.save();
+		wayBill=wayBill.save();
+		
+		//处理生成应收
+		//拖车费，打单费，异提费，港建费，压车费，其他
+		BigDecimal trailerFee=wayBill.trailerFee==null?new BigDecimal(0):wayBill.trailerFee;
+		BigDecimal printFee=wayBill.printFee==null?new BigDecimal(0):wayBill.printFee;
+		BigDecimal provideDifferentFee=wayBill.provideDifferentFee==null?new BigDecimal(0):wayBill.provideDifferentFee;
+		BigDecimal portFee=wayBill.portFee==null?new BigDecimal(0):wayBill.portFee;
+		BigDecimal pressureCarFee=wayBill.pressureCarFee==null?new BigDecimal(0):wayBill.pressureCarFee;
+		BigDecimal otherFee=wayBill.otherFee==null?new BigDecimal(0):wayBill.otherFee;
+		
+		Repayment repayment=new Repayment();
+		repayment.amount=trailerFee.add(printFee).add(provideDifferentFee).add(portFee).add(pressureCarFee).add(otherFee);
+		repayment.status='I';
+		repayment.waybill=wayBill;
+		repayment.save();
+		
 		return msg;
 	}
 

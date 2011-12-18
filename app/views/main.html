@@ -41,7 +41,7 @@
         <div region="west" split="true" title="货运管理系统" style="width:150px;">
             <ul id="menus">
             	<li>
-            		<span>系统管理</span>
+            		<span>运输业务</span>
 	            	<ul>
 		            	<li><span><a href="/">托运单管理</a></span></li>
 		            	<!-- 
@@ -50,9 +50,32 @@
 		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">应付费用查询</a></span></li>
 		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">应收费用核销</a></span></li>
 		            	<li><span><a href="javascript:alert('功能开发中,请稍候')">应付费用核销</a></span></li>
-		            	 -->
 		            	<li><span><a href="/users/index">用户管理</a></span></li>
-		            	<li><span><a href="javascript:$('#dlg_passwd').dialog('open');">密码修改</a></span></li>
+		            	-->
+	            	</ul>
+            	</li>
+            	
+            	<li>
+            		<span>财务结算</span>
+	            	<ul>
+		            	<li><span><a href="/repayments/index">应收对账单</a></span></li>
+		            	<!-- 
+		            	<li><span><a href="/repayments/summary">应收款汇总</a></span></li>
+		            	 -->
+	            	</ul>
+            	</li>
+            	
+             <li>
+            		<span>财务核销</span>
+	            	<ul>
+		            	<li><span><a href="/repayments/cancel">应收款核销</a></span></li>
+	            	</ul>
+            	</li>
+            	
+            	<li>
+            		<span>系统管理</span>
+	            	<ul>
+	            		<li><span><a href="javascript:$('#dlg_passwd').dialog('open');">密码修改</a></span></li>
 		            	<li><span><a href="/logout">退出系统</a></span></li>
 	            	</ul>
             	</li>

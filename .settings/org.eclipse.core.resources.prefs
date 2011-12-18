@@ -1,5 +1,8 @@
-#Sat Sep 17 19:35:25 CST 2011
+#Sun Dec 18 14:57:59 CST 2011
 eclipse.preferences.version=1
+encoding//app/views/Application/index.html=UTF-8
 encoding//app/views/main.html=UTF-8
-encoding//crud/views/CRUD/layout.html=UTF-8
+encoding//app/views/repayments/cancel.html=UTF-8
+encoding//app/views/repayments/list.html=UTF-8
+encoding//public/stylesheets/default.css=UTF-8
 encoding/<project>=UTF-8

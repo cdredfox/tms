@@ -1,0 +1,126 @@
+#{extends 'main.html' /}
+<div id="search">
+	<form id="fm_search">
+		<ul>
+			<li style="float:left; line-height:30px; margin:5px;">客户名称：<input type="text" name="customerName" id="customerName" class="unline_text" /> </li>
+			<li style="float:left; line-height:30px; margin:5px;">  订舱号：<input type="text" name="houseNO" id="houseNO" class="unline_text" /></li>
+			<li style="float:left;  margin:5px;">做柜时间：<input class="unline_text easyui-datebox" id="startDate" name="startDate" />到: <input id="endDate" name="endDate" class="unline_text easyui-datebox"/></li>
+	        
+			<li style="float:left; line-height:30px; margin:5px;">
+				<a href="javascript:search();" class="easyui-linkbutton" iconCls="icon-search">点击查询</a>
+			</li>
+			<li style="line-height:30px; margin:5px">&nbsp;</li>
+		</ul>
+	</form>
+</div>
+<br/>
+<br/>
+<div class="div_line">
+	<div>
+		<div>
+		<ul style="list-style-type:none">
+			<li style="line-height:10px; margin:5px;"><b><font color="red">＊应收对账单只能显示录入日期在2011-12-18之后的单据的应收金额数据</font></b></li>
+			<li style="line-height:10px; margin:5px;"><b><font color="red">＊这里显示的是未销账的应收记录，如果已销账，则不会在这里显示</font></b></li>
+		</ul>
+	</div>	
+	</div>	
+	<div style="padding-left: 10px;padding-right: 10px;padding-bottom: 10px;padding-top: 3%">
+		<table id="tt">
+		</table>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	/* //设置datagird分页控件  
+	var pager = $('#tt').datagrid('getPager');  
+	pager.pagination({  
+	    displayMsg:'当前应收合计：'
+	    });  */
+	 $('#tt').datagrid({
+        url: '/repayments/list',
+        singleSelect:true,
+        pagination: true,
+        nowrap:false,
+        frozenColumns: [[ 
+		{
+			field:'id',
+			title:'序号',
+			width:50
+		},                           
+        {
+            field: 'waybillCreateDate',
+            title: '运单日期',
+            width: 100,
+            formatter: function(val, rec){
+                if (val != null) {
+                    	var date = new Date(val);
+                    	return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+                }
+            }
+        },
+        {
+            field: 'customerName',
+            title: '客户名称',
+            width: 100
+        },
+        {
+            field: 'warehouseNO',
+            title: '定舱号',
+            width: 100
+        }]],
+        columns: [[
+        
+        {
+            field: 'containerType',
+            title: '柜型',
+            width: 50
+        }, {
+            field: 'containerNO',
+            width: 100,
+            title: '柜号'
+        }, {
+            field: 'extractPlace',
+            width: 50,
+            title: '提柜地'
+        }, {
+            field: 'wardrobeAddress',
+            width: 50,
+            title: '装柜地址'
+        },  {
+            field: 'backPlace',
+            width: 50,
+            title: '还柜地'
+        },  {
+            field: 'carNO',
+            width: 100,
+            title: '车牌号'
+        },  {
+            field: 'amount',
+            width: 100,
+            title: '应收金额'
+        }, 
+        {
+            field: 'chargeAmount',
+            width: 100,
+            title: '已收金额'
+        },
+        {
+            field: 'waybillMemo',
+            width: 100,
+            title: '备注'
+        }]]
+    });
+    
+   
+     
+    function search(){
+    	var queryParams=$('#tt').datagrid('options').queryParams;
+		queryParams.customerName=$('#customerName').val();
+		queryParams.houseNO=$('#houseNO').val();
+		queryParams.startDate=$('#startDate').datebox('getValue');
+		queryParams.endDate=$('#endDate').datebox('getValue');
+		$('#tt').datagrid('options').queryParams=queryParams;
+		$('#tt').datagrid('reload'); // reload the user data  
+    }
+</script>
