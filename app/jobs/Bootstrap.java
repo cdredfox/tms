@@ -45,6 +45,14 @@ public class Bootstrap extends Job {
 				Company company=Company.findById((long)1);
 				user.company=company;
 			}
+			user.save();
+			//测试
+			Company company=Company.findById((long)1);
+			Role role=Role.findById((long)1);
+			user = new User("fei.yang","snnuiabc",true);
+			user.role=role;
+			user.company=company;
+			user.save();
 		}
 		
 		
