@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
+import org.hibernate.criterion.Order;
 
 import play.db.jpa.Model;
 @Entity
@@ -39,7 +40,7 @@ public class Repayment extends Model {
 	 * @return
 	 * @throws ParseException 
 	 */
-	public static List<Repayment> query(String customerName,String houseNO,String startDate, String endDate,Character...status) throws ParseException{
+	public static List<Repayment> query(int page,int rows,String customerName,String houseNO,String startDate, String endDate,Character...status) throws ParseException{
 		
 		List<Predicate> conditionList=new ArrayList<Predicate>();
 		CriteriaBuilder cb = Repayment.em().getCriteriaBuilder();
@@ -72,9 +73,57 @@ public class Repayment extends Model {
 	    Predicate[] predicates = new Predicate[conditionList.size()];
 	    conditionList.toArray(predicates);
 		query.where(predicates);
-		List<Repayment> result = Repayment.em().createQuery(query).getResultList();
+		List<Repayment> result = Repayment.em().createQuery(query).setFirstResult((page-1>=0?page-1:0)*rows).setMaxResults(rows).getResultList();
 		return result;
 	}
 	
+	/**
+	 * 查所有未销账的应收记录
+	 * @param customerName
+	 * @param houseNO
+	 * @return
+	 * @throws ParseException 
+	 */
+	public static Long query_total(int page,int rows,String customerName,String houseNO,String startDate, String endDate,Character...status) throws ParseException{
+		
+		List<Predicate> conditionList=new ArrayList<Predicate>();
+		CriteriaBuilder cb = Repayment.em().getCriteriaBuilder();
+		
+		CriteriaQuery<Long> query = cb.createQuery(Long.class);
+		
+		Root repayment = query.from(Repayment.class);
+		query.select(cb.count(repayment));
+		
+		if (StringUtils.isNotEmpty(customerName)) {
+			Predicate customerNameCondition = cb.equal(repayment.get("waybill").get("customer").get("name"), customerName);
+			conditionList.add(customerNameCondition);
+		}
+
+		if (StringUtils.isNotEmpty(houseNO)) {
+			Predicate houseNOCondition = cb.equal(repayment.get("waybill").get("warehouseNO"), houseNO);
+			conditionList.add(houseNOCondition);
+		}
+		
+		if (StringUtils.isNotEmpty(startDate)) {
+			Predicate houseNOCondition = cb.greaterThanOrEqualTo(repayment.get("waybill").get("createDate"), DateUtils.parseDate(startDate, new String[]{"yyyy-MM-dd"}));
+			conditionList.add(houseNOCondition);
+		}
+		
+		if (StringUtils.isNotEmpty(endDate)) {
+			Predicate houseNOCondition = cb.lessThanOrEqualTo(repayment.get("waybill").get("createDate"), DateUtils.parseDate(endDate, new String[]{"yyyy-MM-dd"}));
+			conditionList.add(houseNOCondition);
+		}
+		
+		Predicate houseNOCondition = repayment.get("status").in(status);
+		conditionList.add(houseNOCondition);
+		
+	    Predicate[] predicates = new Predicate[conditionList.size()];
+	    conditionList.toArray(predicates);
+		query.where(predicates);
+		query.orderBy(Order.desc(""));
+		Long count = Repayment.em().createQuery(query).getSingleResult();
+		return count;
+	}
+    
   
 }

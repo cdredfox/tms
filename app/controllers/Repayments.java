@@ -4,7 +4,9 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.management.Query;
 
@@ -20,8 +22,8 @@ import vo.SummaryTotalVO;
 @With(Secure.class)
 public class Repayments extends Controller {
 
-	public static void list(String customerName,String houseNO,String startDate, String endDate) throws ParseException{
-		List<RepaymentVO> data=query(customerName, houseNO,startDate,endDate,new Character[]{'I','W'});
+	public static void list(int page,int rows,String customerName,String houseNO,String startDate, String endDate) throws ParseException{
+		Map<String, Object> map=query(page,rows,customerName, houseNO,startDate,endDate,new Character[]{'I','W'});
 		
 //		SummaryTotalVO<RepaymentVO> json=new SummaryTotalVO<RepaymentVO>();
 //		json.rows=data;
@@ -31,7 +33,7 @@ public class Repayments extends Controller {
 //			private String warehouseNO="合计";
 //		};
 //		
-		renderJSON(data);
+		renderJSON(map);
 	}
 	public static void index(){
 		renderTemplate("repayments/list.html");
@@ -45,19 +47,23 @@ public class Repayments extends Controller {
 		
 	}
 	
-	public static void cancel_list(String customerName,String houseNO,String startDate, String endDate) throws ParseException{
-		List<RepaymentVO> data=query(customerName, houseNO,startDate,endDate,new Character[]{'I','W','S'});
+	public static void cancel_list(int page,int rows,String customerName,String houseNO,String startDate, String endDate) throws ParseException{
+		Map<String, Object> map=query(page,rows,customerName, houseNO,startDate,endDate,new Character[]{'I','W','S'});
 		
-		renderJSON(data);
+		renderJSON(map);
 	}
 	
-	public static List<RepaymentVO> query(String customerName,String houseNO,String startDate, String endDate,Character[] status) throws ParseException{
-		List<Repayment> payments=Repayment.query(customerName, houseNO,startDate,endDate,status);
+	public static Map<String, Object> query(int page,int rows,String customerName,String houseNO,String startDate, String endDate,Character[] status) throws ParseException{
+		List<Repayment> payments=Repayment.query(page,rows,customerName, houseNO,startDate,endDate,status);
+		Long count=Repayment.query_total(page, rows, customerName, houseNO, startDate, endDate, status);
 		List<RepaymentVO> data=new ArrayList<RepaymentVO>();
 		for (Repayment repayment : payments) {
 			data.add(RepaymentVO.convert(repayment));
 		}
-		return data;
+		Map<String, Object> map=new HashMap<String,Object>();
+		map.put("total", count);
+		map.put("rows",data);
+		return map;
 	}
 	
 	public static boolean do_cancel(long[] id,BigDecimal[] amount){

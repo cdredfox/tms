@@ -31,12 +31,22 @@ public class RepaymentVO {
 		vo.finashDate=repayment.finashDate;
 		vo.id=repayment.id;
 		vo.status=repayment.status;
-		vo.backPlace=repayment.waybill.BackPlace.name;
-		vo.carNO=repayment.waybill.car.cardNO;
+		if(repayment.waybill.BackPlace!=null){
+			vo.backPlace=repayment.waybill.BackPlace.name;
+		}
+		if(repayment.waybill.car!=null){
+			vo.carNO=repayment.waybill.car.cardNO;
+		}
 		vo.containerNO=repayment.waybill.ContainerNO;
-		vo.containerType=repayment.waybill.containerType.name;
-		vo.customerName=repayment.waybill.customer.name;
-		vo.extractPlace=repayment.waybill.ExtractPlace.name;
+		if(repayment.waybill.containerType!=null){
+			vo.containerType=repayment.waybill.containerType.name;
+		}
+		if(repayment.waybill.customer!=null){
+			vo.customerName=repayment.waybill.customer.name;
+		}
+		if(repayment.waybill.ExtractPlace!=null){
+			vo.extractPlace=repayment.waybill.ExtractPlace.name;
+		}
 		vo.wardrobeAddress=repayment.waybill.wardrobeAddress;
 		vo.warehouseNO=repayment.waybill.warehouseNO;
 		vo.waybillCreateDate=repayment.waybill.createDate;
