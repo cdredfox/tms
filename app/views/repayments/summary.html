@@ -1,0 +1,94 @@
+#{extends 'main.html' /}
+<div id="search">
+	<form id="fm_search">
+		<ul>
+			<li style="float:left; line-height:30px; margin:5px;">客户名称：<input type="text" name="customerName" id="customerName" class="unline_text" /> </li>
+			<li style="float:left; line-height:30px; margin:5px;">
+				<a href="javascript:search();" class="easyui-linkbutton" iconCls="icon-search">点击查询</a>
+			</li>
+			<li style="line-height:30px; margin:5px">&nbsp;</li>
+		</ul>
+	</form>
+</div>
+<br/>
+<br/>
+<div class="div_line">
+	<div style="padding-left: 10px;padding-right: 10px;padding-bottom: 10px;padding-top: 3%">
+		<table id="tt">
+		</table>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	/* //设置datagird分页控件  
+	var pager = $('#tt').datagrid('getPager');  
+	pager.pagination({  
+	    displayMsg:'当前应收合计：'
+	    });  */
+	 $('#tt').datagrid({
+        url: '/repayments/do_summary',
+        singleSelect:true,
+        pagination: false,
+        nowrap:false,
+        columns: [[
+        {
+            field: 'customerName',
+            title: '客户名称',
+            width: 100
+        },        
+        {
+            field: 'totalRecord',
+            title: '柜量',
+            width: 50
+        }, {
+            field: 'pressureCarFee',
+            width: 100,
+            title: '压车费'
+        }
+        , {
+            field: 'trailerFee',
+            width: 100,
+            title: '拖车费'
+        }, {
+            field: 'printFee',
+            width: 50,
+            title: '打单费'
+        }, {
+            field: 'provideDifferentFee',
+            width: 50,
+            title: '异提费'
+        },  {
+            field: 'portFee',
+            width: 50,
+            title: '港建费'
+        },  {
+            field: 'otherFee',
+            width: 100,
+            title: '其它'
+        },  {
+            field: 'totalFee',
+            width: 100,
+            title: '小计金额'
+        }, 
+        {
+            field: 'chargedAmount',
+            width: 100,
+            title: '已收金额'
+        },
+        {
+            field: 'unChargeAmount',
+            width: 100,
+            title: '未收金额'
+        }]]
+    });
+    
+   
+     
+    function search(){
+    	var queryParams=$('#tt').datagrid('options').queryParams;
+		queryParams.customerName=$('#customerName').val();
+		$('#tt').datagrid('options').queryParams=queryParams;
+		$('#tt').datagrid('reload'); // reload the user data  
+    }
+</script>
